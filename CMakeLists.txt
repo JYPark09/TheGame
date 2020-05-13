@@ -15,9 +15,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
 # 3rd parties
 include_directories(3rdparty/random/include)
+include_directories(3rdparty/doctest/doctest)
 
 # Include directories
-include_directories(include)
+include_directories(Includes)
 
 # Project module
-add_subdirectory(src/TheGame)
+add_subdirectory(Sources/TheGame)
+add_subdirectory(Tests/UnitTest)
