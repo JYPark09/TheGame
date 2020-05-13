@@ -11,7 +11,15 @@ CardStack::CardStack(Type type) : type_(type)
 
 bool CardStack::Stackable(const Card& card) const
 {
-    return (type_ == Type::UP) ? (card > cards_.top()) : (card < cards_.top());
+    if (!card.IsValid())
+        return false;
+
+    if (type_ == Type::UP)
+    {
+        return (card > cards_.top()) || (card == cards_.top() - 10);
+    }
+
+    return (card < cards_.top()) || (card == cards_.top() + 10);
 }
 
 void CardStack::AddCard(Card card)
