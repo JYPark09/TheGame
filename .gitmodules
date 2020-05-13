@@ -1,0 +1,3 @@
+[submodule "3rdparty/random"]
+	path = 3rdparty/random
+	url = https://github.com/effolkronium/random
