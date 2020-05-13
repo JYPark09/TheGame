@@ -1,10 +1,10 @@
 #ifndef THEGAME_CARD_STACK_HPP
 #define THEGAME_CARD_STACK_HPP
 
+#include <TheGame/Cards/Card.hpp>
+
 #include <stack>
 #include <optional>
-
-#include <TheGame/Cards/Card.hpp>
 
 namespace TheGame
 {
