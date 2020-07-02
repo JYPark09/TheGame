@@ -5,12 +5,15 @@
 
 #include <stack>
 #include <optional>
+#include <memory>
 
 namespace TheGame
 {
 class CardStack final
 {
  public:
+    using Ptr = std::unique_ptr<CardStack>;
+
     enum class Type
     {
         UP,

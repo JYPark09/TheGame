@@ -1,7 +1,7 @@
 #ifndef THEGAME_GAME_HPP
 #define THEGAME_GAME_HPP
 
-#include <TheGame/Cards/CardStack.hpp>
+#include <TheGame/Game/GameState.hpp>
 #include <TheGame/Game/Player.hpp>
 
 #include <memory>
@@ -11,16 +11,6 @@ namespace TheGame
 {
 class Game final
 {
- public:
-    static constexpr std::size_t STACK_COUNT = 4;
-
-    enum class Result
-    {
-        NOT_FINISHED,
-        WIN,
-        LOSE
-    };
-
  public:
     Game(const Game&) = delete;
     Game(Game&&) = delete;
@@ -33,20 +23,14 @@ class Game final
 
     void Begin();
 
-    [[nodiscard]] bool IsEnd() const;
-    [[nodiscard]] Result GetResult() const;
+    bool ProcessTurn();
 
-    [[nodiscard]] std::size_t GetMinCardsToDraw() const;
+    [[nodiscard]] const GameState& GetState() const;
 
  private:
     std::vector<std::unique_ptr<Player>> players_;
-
-    std::size_t cardsToHave_{ 0 };
-    std::size_t minCardsToDraw_{ 0 };
-    bool finished_{ true };
-
-    std::vector<Card> cards_;
-    std::unique_ptr<CardStack> stacks_[STACK_COUNT];
+    
+   GameState state_;
 };
 }  // namespace TheGame
 

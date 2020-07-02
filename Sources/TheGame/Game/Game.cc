@@ -24,20 +24,20 @@ void Game::Begin()
     switch (players_.size())
     {
         case 1:
-            cardsToHave_ = 8;
+            state_.CardsToHave = 8;
             break;
 
         case 2:
-            cardsToHave_ = 7;
+            state_.CardsToHave = 7;
             break;
 
         default:
-            cardsToHave_ = 6;
+            state_.CardsToHave = 6;
             break;
     }
 
-    minCardsToDraw_ = 2;
-    finished_ = false;
+    state_.MinCardsToDraw = 2;
+    state_.Finished = false;
 
     std::vector<int> cardIdx(100 - 2);  // 2 to 99
     std::iota(begin(cardIdx), end(cardIdx), 2);
@@ -46,36 +46,21 @@ void Game::Begin()
 
     for (const auto idx : cardIdx)
     {
-        cards_.emplace_back(Card(idx));
+        state_.Cards.emplace_back(Card(idx));
     }
 
-    for (std::size_t i = 0; i < STACK_COUNT; ++i)
-        stacks_[i].reset();
+    for (std::size_t i = 0; i < GameState::STACK_COUNT; ++i)
+        state_.CardStacks[i].reset();
 
-    for (std::size_t i = 0; i < STACK_COUNT / 2; ++i)
-        stacks_[i] = std::make_unique<CardStack>(CardStack::Type::UP);
+    for (std::size_t i = 0; i < GameState::STACK_COUNT / 2; ++i)
+        state_.CardStacks[i] = std::make_unique<CardStack>(CardStack::Type::UP);
 
-    for (std::size_t i = STACK_COUNT / 2; i < STACK_COUNT; ++i)
-        stacks_[i] = std::make_unique<CardStack>(CardStack::Type::DOWN);
+    for (std::size_t i = GameState::STACK_COUNT / 2; i < GameState::STACK_COUNT; ++i)
+        state_.CardStacks[i] = std::make_unique<CardStack>(CardStack::Type::DOWN);
 }
 
-bool Game::IsEnd() const
+bool Game::ProcessTurn()
 {
-    return finished_;
-}
-
-Game::Result Game::GetResult() const
-{
-    if (finished_)
-        return Result::NOT_FINISHED;
-
-    // TODO: Check game result
-
-    return Result::LOSE;
-}
-
-std::size_t Game::GetMinCardsToDraw() const
-{
-    return minCardsToDraw_;
+    return false;
 }
 }  // namespace TheGame
