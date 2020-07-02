@@ -88,7 +88,7 @@ void Game::InvokeCurrentPlayer()
 void Game::ProcessTurn(Task::Arr& tasks)
 {
     for (auto& task : tasks)
-        task.Process();
+        task.Process(state_);
 
     turn_ = (turn_ + 1) % players_.size();
 }

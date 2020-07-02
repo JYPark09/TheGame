@@ -11,7 +11,7 @@ class StackTask final : public Task
  public:
     StackTask(Player& player, const Card& card, std::size_t position);
 
-    void Process() override;
+    void Process(GameState& state) override;
 
  private:
     const Card& card_;

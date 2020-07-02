@@ -2,6 +2,7 @@
 #define THEGAME_TASK_HPP
 
 #include <TheGame/Game/Player.hpp>
+#include <TheGame/Game/GameState.hpp>
 
 #include <vector>
 
@@ -15,7 +16,7 @@ public:
 public:
     Task(Player& player);
 
-    virtual void Process() = 0;
+    virtual void Process(GameState& state) = 0;
 
 protected:
     Player& player_;

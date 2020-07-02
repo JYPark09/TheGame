@@ -10,13 +10,13 @@ class Game;
 class Player
 {
  public:
+    Card::Arr Cards;
+
     Player(Game& game);
     virtual void Invoke() = 0;
 
  protected:
     Game& game_;
-
-    Card::Arr cards_;
 };
 }  // namespace TheGame
 
