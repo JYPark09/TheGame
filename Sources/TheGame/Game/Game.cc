@@ -3,6 +3,7 @@
 #include <effolkronium/random.hpp>
 #include <numeric>
 #include <stdexcept>
+#include <utility>
 
 namespace TheGame
 {
@@ -14,6 +15,21 @@ void Game::AddPlayer(std::unique_ptr<Player>&& player)
 std::size_t Game::GetPlayerNumber() const
 {
     return players_.size();
+}
+
+std::size_t Game::GetTurn() const
+{
+    return turn_;
+}
+
+Player& Game::GetCurrentPlayer()
+{
+    return const_cast<Player&>(std::as_const(*this).GetCurrentPlayer());
+}
+
+const Player& Game::GetCurrentPlayer() const
+{
+    return *(players_[turn_].get());
 }
 
 void Game::Begin()
@@ -39,6 +55,9 @@ void Game::Begin()
     state_.MinCardsToDraw = 2;
     state_.Finished = false;
 
+    turn_ = effolkronium::random_thread_local::get<std::size_t>(
+        0, players_.size() - 1);
+
     std::vector<int> cardIdx(Card::Max - Card::Min - 1);
     std::iota(begin(cardIdx), end(cardIdx), Card::Min + 1);
 
@@ -61,8 +80,16 @@ void Game::Begin()
             std::make_unique<CardStack>(CardStack::Type::DOWN);
 }
 
-bool Game::ProcessTurn()
+void Game::InvokeCurrentPlayer()
 {
-    return false;
+    GetCurrentPlayer().Invoke(*this);
+}
+
+void Game::ProcessTurn(Task::Arr& tasks)
+{
+    for (auto& task : tasks)
+        task.Process(state_);
+
+    turn_ = (turn_ + 1) % players_.size();
 }
 }  // namespace TheGame

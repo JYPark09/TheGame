@@ -3,6 +3,7 @@
 
 #include <TheGame/Game/GameState.hpp>
 #include <TheGame/Game/Player.hpp>
+#include <TheGame/Tasks/Task.hpp>
 
 #include <memory>
 #include <vector>
@@ -20,17 +21,22 @@ class Game final
 
     void AddPlayer(std::unique_ptr<Player>&& player);
     [[nodiscard]] std::size_t GetPlayerNumber() const;
+    [[nodiscard]] std::size_t GetTurn() const;
+    [[nodiscard]] Player& GetCurrentPlayer();
+    [[nodiscard]] const Player& GetCurrentPlayer() const;
 
     void Begin();
 
-    bool ProcessTurn();
+    void InvokeCurrentPlayer();
+    void ProcessTurn(Task::Arr& tasks);
 
     [[nodiscard]] const GameState& GetState() const;
 
  private:
+    std::size_t turn_;
     std::vector<std::unique_ptr<Player>> players_;
-    
-   GameState state_;
+
+    GameState state_;
 };
 }  // namespace TheGame
 
