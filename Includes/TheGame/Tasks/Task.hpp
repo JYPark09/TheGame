@@ -1,7 +1,7 @@
 #ifndef THEGAME_TASK_HPP
 #define THEGAME_TASK_HPP
 
-#include <TheGame/Game/GameState.hpp>
+#include <TheGame/Game/Player.hpp>
 
 #include <vector>
 
@@ -13,7 +13,12 @@ public:
     using Arr = std::vector<Task>;
 
 public:
-    virtual void Process(GameState& state) = 0;
+    Task(Player& player);
+
+    virtual void Process() = 0;
+
+protected:
+    Player& player_;
 };
 }
 

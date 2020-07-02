@@ -4,7 +4,6 @@
 #include <TheGame/Cards/CardStack.hpp>
 
 #include <array>
-#include <vector>
 
 namespace TheGame
 {
@@ -23,7 +22,7 @@ struct GameState final
     std::size_t MinCardsToDraw;
     bool Finished;
 
-    std::vector<Card> Cards;
+    Card::Arr Cards;
     std::array<CardStack::Ptr, STACK_COUNT> CardStacks;
 
     GameResult GetResult() const;

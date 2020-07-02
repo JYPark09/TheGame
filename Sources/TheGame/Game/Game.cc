@@ -82,13 +82,13 @@ void Game::Begin()
 
 void Game::InvokeCurrentPlayer()
 {
-    GetCurrentPlayer().Invoke(*this);
+    GetCurrentPlayer().Invoke();
 }
 
 void Game::ProcessTurn(Task::Arr& tasks)
 {
     for (auto& task : tasks)
-        task.Process(state_);
+        task.Process();
 
     turn_ = (turn_ + 1) % players_.size();
 }
