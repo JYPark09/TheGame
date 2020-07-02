@@ -39,8 +39,8 @@ void Game::Begin()
     state_.MinCardsToDraw = 2;
     state_.Finished = false;
 
-    std::vector<int> cardIdx(100 - 2);  // 2 to 99
-    std::iota(begin(cardIdx), end(cardIdx), 2);
+    std::vector<int> cardIdx(Card::Max - Card::Min - 1);
+    std::iota(begin(cardIdx), end(cardIdx), Card::Min + 1);
 
     effolkronium::random_thread_local::shuffle(cardIdx);
 
@@ -55,8 +55,10 @@ void Game::Begin()
     for (std::size_t i = 0; i < GameState::STACK_COUNT / 2; ++i)
         state_.CardStacks[i] = std::make_unique<CardStack>(CardStack::Type::UP);
 
-    for (std::size_t i = GameState::STACK_COUNT / 2; i < GameState::STACK_COUNT; ++i)
-        state_.CardStacks[i] = std::make_unique<CardStack>(CardStack::Type::DOWN);
+    for (std::size_t i = GameState::STACK_COUNT / 2; i < GameState::STACK_COUNT;
+         ++i)
+        state_.CardStacks[i] =
+            std::make_unique<CardStack>(CardStack::Type::DOWN);
 }
 
 bool Game::ProcessTurn()

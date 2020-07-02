@@ -6,7 +6,7 @@ namespace TheGame
 {
 CardStack::CardStack(Type type) : type_(type)
 {
-    cards_.emplace(type == Type::UP ? 1 : 100);
+    cards_.emplace(type == Type::UP ? Card::Min : Card::Max);
 }
 
 bool CardStack::Stackable(const Card& card) const
