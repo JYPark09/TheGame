@@ -33,6 +33,9 @@ class Game final
     [[nodiscard]] const GameState& GetState() const;
 
  private:
+   void updateResult();
+
+ private:
     std::size_t turn_;
     std::vector<std::unique_ptr<Player>> players_;
 

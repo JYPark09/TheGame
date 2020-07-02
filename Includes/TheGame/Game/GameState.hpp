@@ -20,12 +20,10 @@ struct GameState final
 
     std::size_t CardsToHave;
     std::size_t MinCardsToDraw;
-    bool Finished;
+    GameResult Result;
 
     Card::Arr Cards;
     std::array<CardStack::Ptr, STACK_COUNT> CardStacks;
-
-    GameResult GetResult() const;
 };
 }  // namespace TheGame
 

@@ -16,5 +16,11 @@ void StackTask::Process(GameState& state)
     player_.Cards.erase(it);
 
     state.CardStacks[position_]->AddCard(card_);
+
+    if (!state.Cards.empty())
+    {
+        player_.Cards.emplace_back(state.Cards.back());
+        state.Cards.pop_back();
+    }
 }
 }  // namespace TheGame
