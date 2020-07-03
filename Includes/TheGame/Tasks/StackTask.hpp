@@ -9,12 +9,12 @@ namespace TheGame
 class StackTask final : public Task
 {
  public:
-    StackTask(Player& player, const Card& card, std::size_t position);
+    StackTask(Card card, std::size_t position);
 
-    void Process(GameState& state) override;
+    void Process(GameState* state) override;
 
  private:
-    const Card& card_;
+    Card card_;
     std::size_t position_;
 };
 }  // namespace TheGame
