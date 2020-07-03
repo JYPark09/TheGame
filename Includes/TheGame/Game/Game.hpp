@@ -30,7 +30,8 @@ class Game final
     void Begin();
 
     void InvokeCurrentPlayer();
-    void ProcessTurn(Task::Arr& tasks);
+    void ProcessTurn(Task&& task);
+    void EndTurn();
 
  private:
     void updateResult();

@@ -28,6 +28,7 @@ void buildPlayer(py::module& m)
     py::class_<Player, PyPlayer>(m, "Player")
         .def(py::init<>())
         .def_readwrite("cards", &Player::Cards)
+        .def_readwrite("game", &Player::game_)
         .def("set_game", &Player::SetGame)
         .def("invoke", &Player::Invoke);
 }

@@ -111,19 +111,19 @@ void Game::InvokeCurrentPlayer()
     GetCurrentPlayer().Invoke();
 }
 
-void Game::ProcessTurn(Task::Arr& tasks)
+void Game::ProcessTurn(Task&& task)
 {
     auto& curPlayer = GetCurrentPlayer();
 
-    const std::size_t oldCards = curPlayer.Cards.size();
-    for (auto& task : tasks)
-	{
-		task->SetPlayer(&curPlayer);
-        task->Process(state_);
-	}
+    task.SetPlayer(&curPlayer);
+    task.Process(&state_);
+}
 
-    const std::size_t drawedCards = oldCards - curPlayer.Cards.size();
-    for (std::size_t i = 0; i < drawedCards && !state_.Cards.empty(); ++i)
+void Game::EndTurn()
+{
+    auto& curPlayer = GetCurrentPlayer();
+    const std::size_t diffCards = state_.CardsToHave - curPlayer.Cards.size();
+    for (std::size_t i = 0; i < diffCards && !state_.Cards.empty(); ++i)
     {
         curPlayer.Cards.emplace_back(state_.Cards.back());
         state_.Cards.pop_back();

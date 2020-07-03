@@ -7,6 +7,9 @@
 #include <pyTheGame/Game/GameState.hpp>
 #include <pyTheGame/Game/Player.hpp>
 
+#include <pyTheGame/Tasks/StackTask.hpp>
+#include <pyTheGame/Tasks/Task.hpp>
+
 PYBIND11_MODULE(pyTheGame, m)
 {
     m.doc() = R"pbdoc(TheGame simulator)pbdoc";
@@ -18,4 +21,7 @@ PYBIND11_MODULE(pyTheGame, m)
     buildGameResult(m);
     buildGameState(m);
 	buildPlayer(m);
+
+    buildTask(m);
+    buildStackTask(m);
 }

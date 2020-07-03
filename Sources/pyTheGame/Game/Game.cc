@@ -17,6 +17,7 @@ void buildGame(py::module& m)
 		.def("get_state", &Game::GetState)
 		.def("begin", &Game::Begin)
 		.def("invoke_current_player", &Game::InvokeCurrentPlayer)
-		.def("process_turn", &Game::ProcessTurn);
+		.def_static("process_turn", [](Game* this_, Task* task) { this_->ProcessTurn(std::move(*task)); })
+		.def("end_turn", &Game::EndTurn);
 }
 

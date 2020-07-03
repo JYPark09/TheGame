@@ -10,13 +10,11 @@ class Game;
 class Player
 {
  public:
+    Game* game_{ nullptr };
     Card::Arr Cards;
 
     void SetGame(Game* game);
     virtual void Invoke() = 0;
-
- protected:
-    Game* game_{ nullptr };
 };
 }  // namespace TheGame
 

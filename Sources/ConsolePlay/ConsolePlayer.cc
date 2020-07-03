@@ -26,8 +26,7 @@ void ConsolePlayer::Invoke()
     printState();
     printCards();
 
-    Task::Arr tasks;
-
+    std::size_t processed = 0;
     int card, pos;
     while (true)
     {
@@ -36,7 +35,7 @@ void ConsolePlayer::Invoke()
 
         if (card == 0)
         {
-            if (tasks.size() < game_->GetState().MinCardsToDraw)
+            if (processed < game_->GetState().MinCardsToDraw)
             {
                 cout << "ERROR: you must draw "
                      << game_->GetState().MinCardsToDraw << " card(s).\n";
@@ -64,10 +63,11 @@ void ConsolePlayer::Invoke()
             continue;
         }
 
-        tasks.emplace_back(std::make_unique<StackTask>(*it, pos));
+        game_->ProcessTurn(StackTask(*it, pos));
+        ++processed;
     }
 
-    game_->ProcessTurn(tasks);
+    game_->EndTurn();
 }
 
 void ConsolePlayer::printCards() const

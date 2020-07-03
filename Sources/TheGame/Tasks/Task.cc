@@ -2,8 +2,8 @@
 
 namespace TheGame
 {
-Task::Task(Player& player) : player_(player)
+void Task::SetPlayer(Player* player)
 {
-    // Do nothing
+	player_ = player;
 }
 }
