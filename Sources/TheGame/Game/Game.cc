@@ -105,9 +105,9 @@ void Game::ProcessTurn(Task::Arr& tasks)
 
     const std::size_t oldCards = curPlayer.Cards.size();
     for (auto& task : tasks)
-        task.Process(state_);
+        task->Process(state_);
 
-    const std::size_t drawedCards = curPlayer.Cards.size() - oldCards;
+    const std::size_t drawedCards = oldCards - curPlayer.Cards.size();
     for (std::size_t i = 0; i < drawedCards && !state_.Cards.empty(); ++i)
     {
         curPlayer.Cards.emplace_back(state_.Cards.back());
