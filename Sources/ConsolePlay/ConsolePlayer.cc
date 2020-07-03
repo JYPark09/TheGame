@@ -13,8 +13,8 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-ConsolePlayer::ConsolePlayer(Game& game, std::size_t pos)
-    : Player(game), pos_(pos)
+ConsolePlayer::ConsolePlayer(std::size_t pos)
+    : pos_(pos)
 {
     // Do nothing
 }
@@ -26,8 +26,7 @@ void ConsolePlayer::Invoke()
     printState();
     printCards();
 
-    Task::Arr tasks;
-
+    std::size_t processed = 0;
     int card, pos;
     while (true)
     {
@@ -36,10 +35,10 @@ void ConsolePlayer::Invoke()
 
         if (card == 0)
         {
-            if (tasks.size() < game_.GetState().MinCardsToDraw)
+            if (processed < game_->GetState().MinCardsToDraw)
             {
                 cout << "ERROR: you must draw "
-                     << game_.GetState().MinCardsToDraw << " card(s).\n";
+                     << game_->GetState().MinCardsToDraw << " card(s).\n";
                 continue;
             }
 
@@ -58,16 +57,17 @@ void ConsolePlayer::Invoke()
         cin >> pos;
 
         if (!(pos >= 0 && pos < GameState::STACK_COUNT) ||
-            !game_.GetState().CardStacks[pos]->Stackable(*it))
+            !game_->GetState().CardStacks[pos]->Stackable(*it))
         {
             cout << "ERROR: invalid position.\n";
             continue;
         }
 
-        tasks.emplace_back(std::make_unique<StackTask>(*this, *it, pos));
+        game_->ProcessTurn(StackTask(*it, pos));
+        ++processed;
     }
 
-    game_.ProcessTurn(tasks);
+    game_->EndTurn();
 }
 
 void ConsolePlayer::printCards() const
@@ -86,7 +86,7 @@ void ConsolePlayer::printState() const
     cout << "[Game State]\n";
 
     int pos = 0;
-    for (const auto& s : game_.GetState().CardStacks)
+    for (const auto& s : game_->GetState().CardStacks)
     {
         cout << (pos++)
              << (s->GetType() == CardStack::Type::UP ? " [U  P] " : " [DOWN] ")

@@ -6,7 +6,7 @@
 class ConsolePlayer final : public TheGame::Player
 {
  public:
-    ConsolePlayer(TheGame::Game& game, std::size_t pos);
+    ConsolePlayer(std::size_t pos);
 
     void Invoke() override;
 

@@ -7,9 +7,18 @@
 
 namespace TheGame
 {
-void Game::AddPlayer(std::unique_ptr<Player>&& player)
+Game::Game()
 {
-    players_.emplace_back(std::move(player));
+	for (auto& s : state_.CardStacks)
+	{
+		s = nullptr;
+	}
+}
+
+void Game::AddPlayer(Player* player)
+{
+	player->SetGame(this);
+    players_.emplace_back(player);
 }
 
 std::size_t Game::GetPlayerNumber() const
@@ -29,7 +38,7 @@ Player& Game::GetCurrentPlayer()
 
 const Player& Game::GetCurrentPlayer() const
 {
-    return *(players_[turn_].get());
+    return *(players_[turn_]);
 }
 
 const GameState& Game::GetState() const
@@ -83,15 +92,18 @@ void Game::Begin()
     }
 
     for (std::size_t i = 0; i < GameState::STACK_COUNT; ++i)
-        state_.CardStacks[i].reset();
+	{
+        delete state_.CardStacks[i];
+		state_.CardStacks[i] = nullptr;
+	}
 
     for (std::size_t i = 0; i < GameState::STACK_COUNT / 2; ++i)
-        state_.CardStacks[i] = std::make_unique<CardStack>(CardStack::Type::UP);
+        state_.CardStacks[i] = new CardStack(CardStack::Type::UP);
 
     for (std::size_t i = GameState::STACK_COUNT / 2; i < GameState::STACK_COUNT;
          ++i)
         state_.CardStacks[i] =
-            std::make_unique<CardStack>(CardStack::Type::DOWN);
+            new CardStack(CardStack::Type::DOWN);
 }
 
 void Game::InvokeCurrentPlayer()
@@ -99,16 +111,19 @@ void Game::InvokeCurrentPlayer()
     GetCurrentPlayer().Invoke();
 }
 
-void Game::ProcessTurn(Task::Arr& tasks)
+void Game::ProcessTurn(Task&& task)
 {
     auto& curPlayer = GetCurrentPlayer();
 
-    const std::size_t oldCards = curPlayer.Cards.size();
-    for (auto& task : tasks)
-        task->Process(state_);
+    task.SetPlayer(&curPlayer);
+    task.Process(&state_);
+}
 
-    const std::size_t drawedCards = oldCards - curPlayer.Cards.size();
-    for (std::size_t i = 0; i < drawedCards && !state_.Cards.empty(); ++i)
+void Game::EndTurn()
+{
+    auto& curPlayer = GetCurrentPlayer();
+    const std::size_t diffCards = state_.CardsToHave - curPlayer.Cards.size();
+    for (std::size_t i = 0; i < diffCards && !state_.Cards.empty(); ++i)
     {
         curPlayer.Cards.emplace_back(state_.Cards.back());
         state_.Cards.pop_back();

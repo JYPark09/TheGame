@@ -4,17 +4,17 @@
 
 namespace TheGame
 {
-StackTask::StackTask(Player& player, const Card& card, std::size_t position)
-    : Task(player), card_(card), position_(position)
+StackTask::StackTask(Card card, std::size_t position)
+    : card_(std::move(card)), position_(position)
 {
     // Do nothing
 }
 
-void StackTask::Process(GameState& state)
+void StackTask::Process(GameState* state)
 {
-    const auto it = std::find(begin(player_.Cards), end(player_.Cards), card_);
-    player_.Cards.erase(it);
+    const auto it = std::find(begin(player_->Cards), end(player_->Cards), card_);
+    player_->Cards.erase(it);
 
-    state.CardStacks[position_]->AddCard(card_);
+    state->CardStacks[position_]->AddCard(card_);
 }
 }  // namespace TheGame

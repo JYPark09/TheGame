@@ -4,7 +4,6 @@
 #include <TheGame/Game/Player.hpp>
 #include <TheGame/Game/GameState.hpp>
 
-#include <vector>
 #include <memory>
 
 namespace TheGame
@@ -12,16 +11,10 @@ namespace TheGame
 class Task
 {
 public:
-    using Ptr = std::unique_ptr<Task>;
-    using Arr = std::vector<Task::Ptr>;
+    Player* player_{ nullptr };
+	void SetPlayer(Player* player);
 
-public:
-    Task(Player& player);
-
-    virtual void Process(GameState& state) = 0;
-
-protected:
-    Player& player_;
+    virtual void Process(GameState* state) = 0;
 };
 }
 

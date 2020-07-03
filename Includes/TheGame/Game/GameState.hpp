@@ -23,7 +23,7 @@ struct GameState final
     GameResult Result;
 
     Card::Arr Cards;
-    std::array<CardStack::Ptr, STACK_COUNT> CardStacks;
+    std::array<CardStack*, STACK_COUNT> CardStacks;
 };
 }  // namespace TheGame
 
