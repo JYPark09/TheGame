@@ -5,13 +5,15 @@
 #include <TheGame/Game/GameState.hpp>
 
 #include <vector>
+#include <memory>
 
 namespace TheGame
 {
 class Task
 {
 public:
-    using Arr = std::vector<Task>;
+    using Ptr = std::unique_ptr<Task>;
+    using Arr = std::vector<Task::Ptr>;
 
 public:
     Task(Player& player);
