@@ -3,9 +3,9 @@
 
 #include <TheGame/Cards/Card.hpp>
 
-#include <stack>
-#include <optional>
 #include <memory>
+#include <optional>
+#include <stack>
 
 namespace TheGame
 {
@@ -28,6 +28,8 @@ class CardStack final
     void AddCard(Card card);
     [[nodiscard]] std::optional<Card> PopCard();
     const Card& TopCard() const;
+
+    [[nodiscard]] Type GetType() const;
 
  private:
     Type type_;

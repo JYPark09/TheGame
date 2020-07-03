@@ -45,4 +45,9 @@ const Card& CardStack::TopCard() const
 {
     return cards_.top();
 }
+
+CardStack::Type CardStack::GetType() const
+{
+    return type_;
+}
 }  // namespace TheGame
