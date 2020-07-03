@@ -17,6 +17,12 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 include_directories(3rdparty/random/include)
 include_directories(3rdparty/doctest/doctest)
 
+add_subdirectory(3rdparty/pybind11)
+include_directories(3rdparty/pybind11/include)
+
+# compile options
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+
 # Include directories
 include_directories(Includes)
 
@@ -24,4 +30,5 @@ include_directories(Includes)
 add_subdirectory(Sources/TheGame)
 
 add_subdirectory(Sources/ConsolePlay)
+add_subdirectory(Sources/pyTheGame)
 add_subdirectory(Tests/UnitTest)

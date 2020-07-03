@@ -4,3 +4,6 @@
 [submodule "3rdparty/doctest"]
 	path = 3rdparty/doctest
 	url = https://github.com/onqtam/doctest
+[submodule "3rdparty/pybind11"]
+	path = 3rdparty/pybind11
+	url = https://github.com/pybind/pybind11
