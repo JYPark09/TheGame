@@ -28,8 +28,12 @@ int main()
         cin.ignore();
     }
 
+    std::vector<TheGame::Player*> players(numOfPlayer);
     for (int i = 0; i < numOfPlayer; ++i)
-        game.AddPlayer(std::make_unique<ConsolePlayer>(i + 1));
+    {
+        players[i] = new ConsolePlayer(i + 1);
+        game.AddPlayer(players[i]);
+    }
 
     cout << "\n\nNow start a game" << endl;
     game.Begin();
@@ -49,6 +53,9 @@ int main()
     {
         cout << "You lose :(" << endl;
     }
+
+    for (auto p : players)
+        delete p;
 
     return EXIT_SUCCESS;
 }

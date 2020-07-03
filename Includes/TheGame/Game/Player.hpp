@@ -12,7 +12,7 @@ class Player
  public:
     Card::Arr Cards;
 
-	void SetGame(Game* game);
+    void SetGame(Game* game);
     virtual void Invoke() = 0;
 
  protected:

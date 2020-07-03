@@ -64,7 +64,7 @@ void ConsolePlayer::Invoke()
             continue;
         }
 
-        tasks.emplace_back(std::make_unique<StackTask>(*this, *it, pos));
+        tasks.emplace_back(std::make_unique<StackTask>(*it, pos));
     }
 
     game_->ProcessTurn(tasks);

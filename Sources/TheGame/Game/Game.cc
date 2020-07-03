@@ -7,10 +7,18 @@
 
 namespace TheGame
 {
-void Game::AddPlayer(std::unique_ptr<Player>&& player)
+Game::Game()
+{
+	for (auto& s : state_.CardStacks)
+	{
+		s = nullptr;
+	}
+}
+
+void Game::AddPlayer(Player* player)
 {
 	player->SetGame(this);
-    players_.emplace_back(std::move(player));
+    players_.emplace_back(player);
 }
 
 std::size_t Game::GetPlayerNumber() const
@@ -30,7 +38,7 @@ Player& Game::GetCurrentPlayer()
 
 const Player& Game::GetCurrentPlayer() const
 {
-    return *(players_[turn_].get());
+    return *(players_[turn_]);
 }
 
 const GameState& Game::GetState() const
@@ -109,7 +117,10 @@ void Game::ProcessTurn(Task::Arr& tasks)
 
     const std::size_t oldCards = curPlayer.Cards.size();
     for (auto& task : tasks)
+	{
+		task->SetPlayer(&curPlayer);
         task->Process(state_);
+	}
 
     const std::size_t drawedCards = oldCards - curPlayer.Cards.size();
     for (std::size_t i = 0; i < drawedCards && !state_.Cards.empty(); ++i)
