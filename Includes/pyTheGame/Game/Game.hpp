@@ -6,4 +6,3 @@
 void buildGame(pybind11::module& m);
 
 #endif  // PYTHEGAME_GAME_HPP
-

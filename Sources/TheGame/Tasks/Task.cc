@@ -4,6 +4,6 @@ namespace TheGame
 {
 void Task::SetPlayer(Player* player)
 {
-	player_ = player;
+    player_ = player;
 }
-}
+}  // namespace TheGame

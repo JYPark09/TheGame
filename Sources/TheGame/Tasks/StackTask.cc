@@ -12,7 +12,8 @@ StackTask::StackTask(Card card, std::size_t position)
 
 void StackTask::Process(GameState* state)
 {
-    const auto it = std::find(begin(player_->Cards), end(player_->Cards), card_);
+    const auto it =
+        std::find(begin(player_->Cards), end(player_->Cards), card_);
     player_->Cards.erase(it);
 
     state->CardStacks[position_]->AddCard(card_);

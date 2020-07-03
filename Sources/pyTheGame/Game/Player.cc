@@ -10,16 +10,12 @@ using namespace TheGame;
 
 class PyPlayer : public Player
 {
-public:
+ public:
     using Player::Player;
 
     void Invoke() override
     {
-        PYBIND11_OVERLOAD_PURE(
-            void,
-            Player,
-            invoke
-        );
+        PYBIND11_OVERLOAD_PURE(void, Player, invoke);
     }
 };
 

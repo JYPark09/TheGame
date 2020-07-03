@@ -9,15 +9,15 @@ namespace TheGame
 {
 Game::Game()
 {
-	for (auto& s : state_.CardStacks)
-	{
-		s = nullptr;
-	}
+    for (auto& s : state_.CardStacks)
+    {
+        s = nullptr;
+    }
 }
 
 void Game::AddPlayer(Player* player)
 {
-	player->SetGame(this);
+    player->SetGame(this);
     players_.emplace_back(player);
 }
 
@@ -92,18 +92,17 @@ void Game::Begin()
     }
 
     for (std::size_t i = 0; i < GameState::STACK_COUNT; ++i)
-	{
+    {
         delete state_.CardStacks[i];
-		state_.CardStacks[i] = nullptr;
-	}
+        state_.CardStacks[i] = nullptr;
+    }
 
     for (std::size_t i = 0; i < GameState::STACK_COUNT / 2; ++i)
         state_.CardStacks[i] = new CardStack(CardStack::Type::UP);
 
     for (std::size_t i = GameState::STACK_COUNT / 2; i < GameState::STACK_COUNT;
          ++i)
-        state_.CardStacks[i] =
-            new CardStack(CardStack::Type::DOWN);
+        state_.CardStacks[i] = new CardStack(CardStack::Type::DOWN);
 }
 
 void Game::InvokeCurrentPlayer()
@@ -149,7 +148,7 @@ void Game::updateResult()
         state_.Result = GameResult::WIN;
         return;
     }
-    
+
     // this method called when turn points next player
     const auto& nextPlayer = GetCurrentPlayer();
     for (const auto& card : nextPlayer.Cards)

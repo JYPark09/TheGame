@@ -13,8 +13,7 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-ConsolePlayer::ConsolePlayer(std::size_t pos)
-    : pos_(pos)
+ConsolePlayer::ConsolePlayer(std::size_t pos) : pos_(pos)
 {
     // Do nothing
 }

@@ -6,4 +6,3 @@
 void buildTask(pybind11::module& m);
 
 #endif  // PYTHEGAME_TASK_HPP
-

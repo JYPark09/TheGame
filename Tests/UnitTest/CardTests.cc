@@ -60,7 +60,6 @@ TEST_CASE("[CardTests] - Down CardStack")
 {
     CardStack cards(CardStack::Type::DOWN);
 
-
     CHECK_FALSE(!cards.Stackable(Card(99)));
     CHECK_FALSE(cards.Stackable(Card(100)));
 
