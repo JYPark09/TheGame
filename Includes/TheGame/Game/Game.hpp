@@ -13,6 +13,7 @@ namespace TheGame
 class Game final
 {
  public:
+    Game() = default;
     Game(const Game&) = delete;
     Game(Game&&) = delete;
 
@@ -24,16 +25,15 @@ class Game final
     [[nodiscard]] std::size_t GetTurn() const;
     [[nodiscard]] Player& GetCurrentPlayer();
     [[nodiscard]] const Player& GetCurrentPlayer() const;
+    [[nodiscard]] const GameState& GetState() const;
 
     void Begin();
 
     void InvokeCurrentPlayer();
     void ProcessTurn(Task::Arr& tasks);
 
-    [[nodiscard]] const GameState& GetState() const;
-
  private:
-   void updateResult();
+    void updateResult();
 
  private:
     std::size_t turn_;

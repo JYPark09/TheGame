@@ -32,6 +32,11 @@ const Player& Game::GetCurrentPlayer() const
     return *(players_[turn_].get());
 }
 
+const GameState& Game::GetState() const
+{
+    return state_;
+}
+
 void Game::Begin()
 {
     if (players_.empty())
@@ -96,9 +101,20 @@ void Game::InvokeCurrentPlayer()
 
 void Game::ProcessTurn(Task::Arr& tasks)
 {
+    auto& curPlayer = GetCurrentPlayer();
+
+    const std::size_t oldCards = curPlayer.Cards.size();
     for (auto& task : tasks)
         task.Process(state_);
 
+    const std::size_t drawedCards = curPlayer.Cards.size() - oldCards;
+    for (std::size_t i = 0; i < drawedCards && !state_.Cards.empty(); ++i)
+    {
+        curPlayer.Cards.emplace_back(state_.Cards.back());
+        state_.Cards.pop_back();
+    }
+
+    // now turn_ points next player
     turn_ = (turn_ + 1) % players_.size();
 
     if (state_.Cards.empty())
