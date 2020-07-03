@@ -3,6 +3,7 @@
 #include <pyTheGame/Cards/Card.hpp>
 #include <pyTheGame/Cards/CardStack.hpp>
 
+#include <pyTheGame/Game/Game.hpp>
 #include <pyTheGame/Game/GameState.hpp>
 #include <pyTheGame/Game/Player.hpp>
 
@@ -13,6 +14,8 @@ PYBIND11_MODULE(pyTheGame, m)
     buildCard(m);
     buildCardStack(m);
     
+	buildGame(m);
     buildGameResult(m);
     buildGameState(m);
+	buildPlayer(m);
 }
