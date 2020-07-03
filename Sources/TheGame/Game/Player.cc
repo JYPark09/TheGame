@@ -2,8 +2,8 @@
 
 namespace TheGame
 {
-Player::Player(Game& game) : game_(game)
+void Player::SetGame(Game* game)
 {
-    // Do nothing
+	game_ = game;
 }
 }

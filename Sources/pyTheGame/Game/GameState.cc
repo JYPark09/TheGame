@@ -22,7 +22,7 @@ void buildGameState(py::module& m)
         .def_readonly_static("STACK_COUNT", &GameState::STACK_COUNT)
         .def_readwrite("cards_to_have", &GameState::CardsToHave)
         .def_readwrite("min_cards_to_have", &GameState::MinCardsToDraw)
-        .def_readwrite("result", &GameState::result)
+        .def_readwrite("result", &GameState::Result)
         .def_readwrite("cards", &GameState::Cards)
         .def_readwrite("card_stacks", &GameState::CardStacks);
 }

@@ -9,6 +9,7 @@ namespace TheGame
 {
 void Game::AddPlayer(std::unique_ptr<Player>&& player)
 {
+	player->SetGame(this);
     players_.emplace_back(std::move(player));
 }
 
@@ -83,15 +84,18 @@ void Game::Begin()
     }
 
     for (std::size_t i = 0; i < GameState::STACK_COUNT; ++i)
-        state_.CardStacks[i].reset();
+	{
+        delete state_.CardStacks[i];
+		state_.CardStacks[i] = nullptr;
+	}
 
     for (std::size_t i = 0; i < GameState::STACK_COUNT / 2; ++i)
-        state_.CardStacks[i] = std::make_unique<CardStack>(CardStack::Type::UP);
+        state_.CardStacks[i] = new CardStack(CardStack::Type::UP);
 
     for (std::size_t i = GameState::STACK_COUNT / 2; i < GameState::STACK_COUNT;
          ++i)
         state_.CardStacks[i] =
-            std::make_unique<CardStack>(CardStack::Type::DOWN);
+            new CardStack(CardStack::Type::DOWN);
 }
 
 void Game::InvokeCurrentPlayer()

@@ -4,6 +4,7 @@
 #include <pyTheGame/Cards/CardStack.hpp>
 
 #include <pyTheGame/Game/GameState.hpp>
+#include <pyTheGame/Game/Player.hpp>
 
 PYBIND11_MODULE(pyTheGame, m)
 {
@@ -11,7 +12,7 @@ PYBIND11_MODULE(pyTheGame, m)
 
     buildCard(m);
     buildCardStack(m);
-
+    
     buildGameResult(m);
     buildGameState(m);
 }

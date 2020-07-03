@@ -29,7 +29,7 @@ int main()
     }
 
     for (int i = 0; i < numOfPlayer; ++i)
-        game.AddPlayer(std::make_unique<ConsolePlayer>(game, i + 1));
+        game.AddPlayer(std::make_unique<ConsolePlayer>(i + 1));
 
     cout << "\n\nNow start a game" << endl;
     game.Begin();
