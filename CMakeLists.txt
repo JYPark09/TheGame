@@ -22,4 +22,6 @@ include_directories(Includes)
 
 # Project module
 add_subdirectory(Sources/TheGame)
+
+add_subdirectory(Sources/ConsolePlay)
 add_subdirectory(Tests/UnitTest)
