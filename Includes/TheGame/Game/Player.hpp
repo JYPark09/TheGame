@@ -16,6 +16,12 @@ class Player
     void SetGame(Game* game);
     virtual void Invoke() = 0;
 };
+
+class FakePlayer : public Player
+{
+ public:
+	void Invoke() override;
+};
 }  // namespace TheGame
 
 #endif  // THEGAME_PLAYER_HPP

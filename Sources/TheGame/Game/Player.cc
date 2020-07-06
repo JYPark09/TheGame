@@ -6,4 +6,9 @@ void Player::SetGame(Game* game)
 {
     game_ = game;
 }
+
+void FakePlayer::Invoke()
+{
+	// Do nothing
+}
 }  // namespace TheGame

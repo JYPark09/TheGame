@@ -27,4 +27,9 @@ void buildPlayer(py::module& m)
         .def_readwrite("game", &Player::game_)
         .def("set_game", &Player::SetGame)
         .def("invoke", &Player::Invoke);
+
+	py::class_<FakePlayer, Player>(m, "FakePlayer")
+		.def(py::init<>())
+		.def("invoke", &FakePlayer::Invoke);
 }
+
