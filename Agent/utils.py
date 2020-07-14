@@ -51,15 +51,28 @@ def state_to_tensor(player: pyTheGame.Player):
 
     return np.concatenate((card_stacks_tensor, hands_tensor))
 
-def action_mask(player: pyTheGame.Player):
+def get_action_list(player: pyTheGame.Player):
     state = player.game.get_state()
 
-    mask = np.zeros(state.cards_to_have * state.STACK_COUNT)
+    actions = []
 
     for i, card in enumerate(player.cards):
         for j in range(state.STACK_COUNT):
-            if state.card_stacks[j].stackable(card):
-                mask[i * state.STACK_COUNT + j] = 1
+            actions.append((i, j))
+
+    return actions
+
+def action_mask(player: pyTheGame.Player):
+    state = player.game.get_state()
+    actions = get_action_list(player)
+
+    mask = np.zeros(state.cards_to_have * state.STACK_COUNT)
+
+    for action in actions:
+        i, j = action
+
+        if state.card_stacks[j].stackable(player.cards[i]):
+            mask[i * state.STACK_COUNT + j] = 1
 
     return mask
 
