@@ -23,7 +23,9 @@ class Network(nn.Module):
         self.fc1 = nn.Linear(n_obs, 256)
         self.fc2 = nn.Linear(256, 256)
         self.fc3 = nn.Linear(256, 256)
-        self.fc4 = nn.Linear(256, n_hands*n_stacks + 1)
+        self.fc4 = nn.Linear(256, 256)
+        self.fc5 = nn.Linear(256, 256)
+        self.fc6 = nn.Linear(256, n_hands*n_stacks + 1)
 
         self.relu = nn.ReLU(inplace=True)
 
@@ -31,8 +33,10 @@ class Network(nn.Module):
         x = self.relu(self.fc1(x))
         x = self.relu(self.fc2(x))
         x = self.relu(self.fc3(x))
+        x = self.relu(self.fc4(x))
+        x = self.relu(self.fc5(x))
 
-        return self.fc4(x)
+        return self.fc6(x)
 
 class REINFORCEAgent(pyTheGame.Player):
     def __init__(self):
@@ -65,13 +69,15 @@ class REINFORCEAgent(pyTheGame.Player):
 
             action = m.sample()
             self.log_pi_buf.append(m.log_prob(action))
-            self.reward_buf.append(1)
 
             action = action.item()
             actions = get_action_list(self)
 
             if action == len(mask) - 1:
+                self.reward_buf.append(0)
                 break
+
+            self.reward_buf.append(1)
 
             card_idx, stack_idx = actions[action]
             self.game.process_turn(self.game, pyTheGame.StackTask(self.cards[card_idx], stack_idx))
@@ -104,5 +110,11 @@ class REINFORCEAgent(pyTheGame.Player):
 
         self.opt.step()
 
-        self.log_pi_buf = []
-        self.reward_buf = []
+        total_reward = sum(self.reward_buf)
+        total_loss = loss.item()
+
+        del self.log_pi_buf[:]
+        del self.reward_buf[:]
+
+        return total_reward, total_loss
+
